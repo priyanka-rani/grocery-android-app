@@ -34,10 +34,7 @@ class ProfileRepository @Inject constructor(
         if (profile?.password?.let { Utilities.decodeBase64(it) } == password) profile
         else null
     }
-
-
     fun getUser()= profileDao.getProfile(preferenceHelper.loggedInId)
-
 
     fun loginUser(loggedinId: Int) {
         preferenceHelper.loginUser(loggedinId)

@@ -22,7 +22,7 @@ class ProfileViewModel @ViewModelInject constructor(private val profileRepositor
     }
 
     fun enableUpdate(vararg args: String?): Boolean {
-        return !args.any { it.isNullOrBlank() }
+        return args.all { !it.isNullOrBlank() }
     }
 
 }

@@ -152,7 +152,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
-                    android:enabled="@{viewModel.enableUpdate(viewModel.profile.name,viewModel.profile.email, viewModel.profile.contact, viewModel.profile.address, viewModel.profile.category)}"
                     android:onClick="@{()->viewModel.updateUser()}"
                     android:text="@string/update"
                     app:layout_constraintStart_toStartOf="parent"
