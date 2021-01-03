@@ -66,7 +66,7 @@
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text='@{"Rs. "+data.productPrice}'
+                android:text="@{@string/price_place_holder(data.productPrice)}"
                 app:layout_constraintTop_toBottomOf="@id/tvName"/>
             <Button
                 android:id="@+id/btAddToCard"

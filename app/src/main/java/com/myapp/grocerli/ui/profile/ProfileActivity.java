@@ -32,8 +32,18 @@ public class ProfileActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.profile_update)
                     .setMessage(success?R.string.profile_update_message:R.string.profile_update_failed)
-                    .setPositiveButton(android.R.string.ok,null).show();
+                    .setPositiveButton(android.R.string.ok,(dialog, which) -> {
+                        if(success) onBackPressed();
+                    }).show();
         });
         binding.toolBar.setNavigationOnClickListener(v -> onBackPressed());
+        profileViewModel.getProfileLiveData().observe(this, profile -> {
+            profileViewModel.getName().postValue(profile.name);
+            profileViewModel.getEmail().postValue(profile.email);
+            profileViewModel.getContact().postValue(profile.contact);
+            profileViewModel.getAddress().postValue(profile.address);
+            profileViewModel.getCategory().postValue(profile.category);
+            profileViewModel.getPass().postValue(Utilities.INSTANCE.decodeBase64(profile.password));
+        });
     }
 }

@@ -31,7 +31,7 @@ class ProfileRepository @Inject constructor(
         private val profileDao: ProfileDao,
         private val preferenceHelper: PreferenceHelper) {
     fun checkLogin(email: String, password: String) = profileDao.getProfile(email).map { profile ->
-        if (profile.password?.let { Utilities.decodeBase64(it) } == password) profile
+        if (profile?.password?.let { Utilities.decodeBase64(it) } == password) profile
         else null
     }
     fun getUser()= profileDao.getProfile(preferenceHelper.loggedInId)
