@@ -10,16 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.myapp.grocerli.R;
 import com.myapp.grocerli.adapters.CartAdapter;
-import com.myapp.grocerli.adapters.ProductListAdapter;
 import com.myapp.grocerli.data.CartItem;
-import com.myapp.grocerli.data.Product;
 import com.myapp.grocerli.databinding.ActivityCartBinding;
-import com.myapp.grocerli.databinding.ActivityLoginBinding;
-import com.myapp.grocerli.ui.login.LoginViewModel;
-import com.myapp.grocerli.ui.main.MainActivity;
 import com.myapp.grocerli.ui.order.OrderActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -37,34 +31,34 @@ public class CartActivity extends AppCompatActivity {
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         binding.setViewModel(cartViewModel);
         binding.setLifecycleOwner(this);
-        cartViewModel.getCartItemListLiveData().observe(this, cartItems -> {
-            CartAdapter adapter = new CartAdapter(cartItems, new CartAdapter.ItemClickListener() {
+        CartAdapter adapter = new CartAdapter(new CartAdapter.ItemClickListener() {
 
-                @Override
-                public void onItemDelete(CartItem cartItem) {
-                    cartViewModel.deleteCartItem(cartItem);
-                }
-
-                @Override
-                public void onItemUpdate(CartItem cartItem) {
-                    cartViewModel.updateCartItem(cartItem);
-                }
-            });
-            binding.rvItems.setAdapter(adapter);
-        });
-
-        binding.btPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                cartViewModel.insertOrderItem();
-                if(cartViewModel.getCartItemListLiveData().getValue().size()>0){
-                   Toast.makeText(v.getContext(), "Order Placed Successfully!!",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(CartActivity.this, OrderActivity.class);
-                    startActivity(intent);
-                    CartActivity.this.finish();
-                }
-
+            public void onItemDelete(CartItem cartItem) {
+                cartViewModel.deleteCartItem(cartItem);
             }
+
+            @Override
+            public void onItemUpdate(CartItem cartItem) {
+                cartViewModel.updateCartItem(cartItem);
+            }
+        });
+        binding.rvItems.setAdapter(adapter);
+        cartViewModel.getCartItemListLiveData().observe(this, adapter::submitList);
+
+        binding.btPlaceOrder.setOnClickListener(v -> {
+            cartViewModel.insertOrderItem();
+            if (cartViewModel.getCartItemListLiveData().getValue().size() > 0) {
+                new AlertDialog.Builder(v.getContext()).setTitle(R.string.place_order)
+                        .setMessage("Order Placed Successfully!!")
+                        .setPositiveButton("OK", (dialog, which) ->{
+                            cartViewModel.deleteCartItems();
+                            Intent intent = new Intent(CartActivity.this, OrderActivity.class);
+                            startActivity(intent);
+                            CartActivity.this.finish();
+                        } ).show();
+            }
+
         });
         binding.toolBar.setNavigationOnClickListener(v -> onBackPressed());
 

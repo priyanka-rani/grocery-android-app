@@ -1,27 +1,36 @@
 package com.myapp.grocerli.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.grocerli.data.CartItem;
-import com.myapp.grocerli.data.Product;
 import com.myapp.grocerli.databinding.ItemCartBinding;
-import com.myapp.grocerli.databinding.ItemProductBinding;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    private List<CartItem> data;
+public class CartAdapter extends ListAdapter<CartItem, CartAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
 
-    public CartAdapter(List<CartItem> data, ItemClickListener itemClickListener) {
-        this.data = data;
+    public CartAdapter(ItemClickListener itemClickListener) {
+        super(new ProductDiff());
         this.itemClickListener = itemClickListener;
+    }
+
+    public static class ProductDiff extends DiffUtil.ItemCallback<CartItem> {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
+            return oldItem == newItem;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
+            return oldItem.getCartId() == newItem.getCartId() && oldItem.getCount() == newItem.getCount();
+        }
     }
 
     @NonNull
@@ -34,17 +43,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CartItem item = data.get(position);
+        CartItem item = getItem(position);
         holder.setData(item);
-    }
-
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
-    public CartItem getItem(int pos) {
-        return data.get(pos);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,18 +56,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             binding.btDelete.setOnClickListener(v -> itemClickListener.onItemDelete(getItem(getAdapterPosition())));
             binding.tilCount.setEndIconOnClickListener(v -> {
                 CartItem item = getItem(getAdapterPosition());
-                if(item.getCount()<10){
-                    item.setCount(item.getCount()+1);
+                if (item.getCount() < 10) {
+                    item.setCount(item.getCount() + 1);
                     itemClickListener.onItemUpdate(item);
                 }
 
             });
             binding.tilCount.setStartIconOnClickListener(v -> {
                 CartItem item = getItem(getAdapterPosition());
-                if(item.getCount()>1){
-                    item.setCount(item.getCount()-1);
+                if (item.getCount() > 1) {
+                    item.setCount(item.getCount() - 1);
                     itemClickListener.onItemUpdate(item);
-                }else {
+                } else {
                     itemClickListener.onItemDelete(item);
                 }
 
@@ -82,6 +82,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public interface ItemClickListener {
         void onItemDelete(CartItem cartItem);
+
         void onItemUpdate(CartItem cartItem);
     }
 }

@@ -34,9 +34,13 @@ class CartViewModel @ViewModelInject internal constructor(private val productRep
         }
     }
 
-    fun insertOrderItem() {
+    fun deleteCartItems() {
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.deleteAllCartItem()
+        }
+    }
+    fun insertOrderItem() {
+        viewModelScope.launch(Dispatchers.IO) {
             productRepository.insertOrderItem(OrderItem(totalPrice = totalPrice.value, cartItemList = cartItemListLiveData.value))
         }
     }

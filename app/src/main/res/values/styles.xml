@@ -26,7 +26,13 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
-    <style name="Theme.Grocerli.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
+    <style name="Theme.Grocerli.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
+        >
+        <!-- THIS is where you can color the arrow! -->
+        <item name="android:textColorPrimary">?colorAccent</item>
+        <item name="colorControlNormal">?colorAccent</item>
+        <item name="actionMenuTextColor">?colorAccent</item>
+    </style>
 
     <style name="Theme.Grocerli.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
     <style name="roundedImageView">
