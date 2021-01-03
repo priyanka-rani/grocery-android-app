@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.myapp.grocerli.data.Product" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        app:cardUseCompatPadding="true"
+        android:layout_gravity="center"
+        app:cardCornerRadius="2dp"
+        app:cardPreventCornerOverlap="true"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:id="@+id/ivImage"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                android:layout_margin="16dp"
+                android:src="@{data.imageName}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:lines="1"
+                android:maxLines="1"
+                app:layout_constrainedWidth="true"
+                app:autoSizeMaxTextSize="18sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                tools:text="@tools:sample/lorem"
+                android:text="@{data.productName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintTop_toBottomOf="@id/ivImage"/>
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Rs. 400.00"
+                android:lines="1"
+                android:maxLines="1"
+                app:layout_constrainedHeight="true"
+                app:autoSizeMaxTextSize="18sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                android:textColor="?colorAccent"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:text='@{"Rs. "+data.productPrice}'
+                app:layout_constraintTop_toBottomOf="@id/tvName"/>
+            <Button
+                android:id="@+id/btAddToCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:backgroundTint="?colorAccent"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_to_cart"
+                app:layout_constraintTop_toBottomOf="@id/tvName"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

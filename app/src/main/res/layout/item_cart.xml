@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.myapp.grocerli.data.CartItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@{data.product.imageName}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".15"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{data.product.productName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@+id/tvCode"
+                app:layout_constraintEnd_toStartOf="@id/tilCount"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/ivImage"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="@tools:sample/lorem" />
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text='@{"Product Code: "+data.product.productCode}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:layout_constraintBottom_toTopOf="@+id/tvPrice"
+                app:layout_constraintStart_toStartOf="@id/tvName"
+                app:layout_constraintEnd_toEndOf="@id/tvName"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                tools:text="Product Code: XXXXXX" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text='@{"Rs. "+data.product.productPrice}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvName"
+                app:layout_constraintTop_toBottomOf="@+id/tvCode"
+                app:layout_constraintEnd_toEndOf="@id/tvName"
+                tools:text="Rs. 400.00" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilCount"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:endIconDrawable="@drawable/ic_round_add"
+                app:endIconMode="custom"
+                app:endIconTint="@color/orange_500"
+                app:hintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btDelete"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/ic_round_remove"
+                app:startIconTint="@color/orange_500">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minEms="2"
+                    android:text='@{data.count+""}'
+                    tools:text="10"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/btDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="?selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@id/tilCount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tilCount"
+                app:srcCompat="@drawable/ic_delete" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Grocerli</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="menu_profile">Profile</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="invalid_email_pass">Invalid Email or Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="logout">Logout</string>
+    <string name="menu_orders">Your Orders</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="place_order">Place Order</string>
+    <string name="total_price_place_holder">Total Price: Rs. %.2f</string>
+    <string name="price_place_holder">Rs. %.2f</string>
+    <string name="cart">Cart</string>
+    <string name="name">Name</string>
+    <string name="contact">Contact</string>
+    <string name="signup_success_message">Sign Up is Successful!. Please Login with your email and password to enjoy Grocery Shopping!</string>
+    <string name="update">Update</string>
+    <string name="address">Address</string>
+    <string name="category">Category</string>
+    <string name="profile_update_message">Profile Updated Successfully</string>
+</resources>

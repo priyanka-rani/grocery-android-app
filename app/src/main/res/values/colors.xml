@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="indigo_200">#9FA8DA</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="orange_200">#FFAB91</color>
+    <color name="orange_700">#E64A19</color>
+    <color name="orange_500">#E64A19</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Scrim colors -->
+    <color name="system_ui_scrim_light">#B3FFFFFF</color> <!-- 70% white -->
+    <color name="system_ui_scrim_black">#40000000</color> <!-- 25% black -->
+    <!-- We use a dark scrim by default since light status is API 23+ -->
+    <color name="status_bar_scrim">@color/system_ui_scrim_black</color>
+    <!-- We use a dark scrim by default since light nav bar is API 27+ -->
+    <color name="nav_bar_scrim">@color/system_ui_scrim_light</color>
+</resources>

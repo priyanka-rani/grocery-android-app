@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Grocerli" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/indigo_500</item>
+        <item name="colorPrimaryDark">@color/indigo_700</item>
+        <!-- Secondary brand color. -->
+        <item name="colorAccent">@color/orange_500</item>
+        <!-- Customize your theme here. -->
+        <!-- Window decor -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor" tools:targetApi="m">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">@color/nav_bar_scrim</item>
+    </style>
+
+    <style name="Theme.Grocerli.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Grocerli.NoActionBar.Splash">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="Theme.Grocerli.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
+
+    <style name="Theme.Grocerli.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="GlideSliderImageStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+</resources>

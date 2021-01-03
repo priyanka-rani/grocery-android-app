@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Grocerli.NoActionBar.Splash">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--Required Api 21 above-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
