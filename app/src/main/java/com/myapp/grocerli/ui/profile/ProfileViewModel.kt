@@ -12,8 +12,8 @@ class ProfileViewModel @ViewModelInject constructor(private val profileRepositor
     private val _signup = MutableLiveData<Profile>()
     val updateResponse = _signup.switchMap {
         liveData {
-            profileRepository.updateUser(it)
-            emit(Unit)
+            val result = profileRepository.updateUser(it)
+            emit(result>0)
         }
     }
 

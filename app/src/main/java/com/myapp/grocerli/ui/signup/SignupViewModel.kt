@@ -1,11 +1,13 @@
 package com.myapp.grocerli.ui.signup
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import com.myapp.grocerli.Utilities
 import com.myapp.grocerli.data.Profile
 import com.myapp.grocerli.repository.ProfileRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class SignupViewModel @ViewModelInject constructor(private val profileRepository: ProfileRepository) : ViewModel() {
     var name = MutableLiveData<String>()
@@ -17,13 +19,13 @@ class SignupViewModel @ViewModelInject constructor(private val profileRepository
     private val _signup = MutableLiveData<Profile>()
     val signUpResponse = _signup.switchMap {
         liveData {
-            profileRepository.insertUser(it)
-            emit(Unit)
+            val result = profileRepository.insertUser(it)
+            emit(result > 0)
         }
     }
 
     fun insertUser() {
-        val profile = Profile(name.value, email.value, pass.value)
+        val profile = Profile(name.value, email.value, pass.value?.let { Utilities.encodeToBase64(it) })
         profile.contact = contact.value
         profile.address = address.value
         profile.category = category.value

@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.myapp.grocerli.R;
+import com.myapp.grocerli.Utilities;
 import com.myapp.grocerli.databinding.ActivitySignupBinding;
+import com.myapp.grocerli.ui.profile.ProfileActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -25,13 +28,16 @@ public class SignupActivity extends AppCompatActivity {
         signupViewModel = new ViewModelProvider(this).get(SignupViewModel.class);
         binding.setViewModel(signupViewModel);
         binding.setLifecycleOwner(this);
-        signupViewModel.getSignUpResponse().observe(this, unit -> {
+        signupViewModel.getSignUpResponse().observe(this, success -> {
+            Utilities.INSTANCE.hideKeyboard(SignupActivity.this);
+            if(success)
             new AlertDialog.Builder(this)
                     .setTitle(R.string.sign_up)
                     .setMessage(R.string.signup_success_message)
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                         onBackPressed();
                     }).show();
+            else Snackbar.make(binding.getRoot(), R.string.signup_failed, Snackbar.LENGTH_LONG).show();
         });
         binding.toolBar.setNavigationOnClickListener(v -> onBackPressed());
     }

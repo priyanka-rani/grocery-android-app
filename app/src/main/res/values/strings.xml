@@ -22,4 +22,7 @@
     <string name="address">Address</string>
     <string name="category">Category</string>
     <string name="profile_update_message">Profile Updated Successfully</string>
+    <string name="signup_failed">User Already Exist, Signup failed</string>
+    <string name="profile_update">Profile Update</string>
+    <string name="profile_update_failed">Profile Update Failed!</string>
 </resources>
