@@ -2,6 +2,7 @@ package com.myapp.grocerli.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,11 @@ public class LoginActivity extends AppCompatActivity {
                         loginViewModel.saveLogin(resource.getData().id);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         LoginActivity.this.finish();
+                    }else {
+                        new Handler().postDelayed(() -> {
+                            if(resource.getData() == null)
+                                Snackbar.make(binding.getRoot(),R.string.invalid_email_pass, Snackbar.LENGTH_LONG).show();
+                        }, 1000);
                     }
 
 
