@@ -31,7 +31,7 @@
         <!-- THIS is where you can color the arrow! -->
         <item name="android:textColorPrimary">?colorAccent</item>
         <item name="colorControlNormal">?colorAccent</item>
-        <item name="actionMenuTextColor">?colorAccent</item>
+        <item name="actionMenuTextColor">@color/black</item>
     </style>
 
     <style name="Theme.Grocerli.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />

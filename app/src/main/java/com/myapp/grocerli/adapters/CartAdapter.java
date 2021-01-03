@@ -67,10 +67,7 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.ViewHolder> {
                 if (item.getCount() > 1) {
                     item.setCount(item.getCount() - 1);
                     itemClickListener.onItemUpdate(item);
-                } else {
-                    itemClickListener.onItemDelete(item);
                 }
-
             });
         }
 
