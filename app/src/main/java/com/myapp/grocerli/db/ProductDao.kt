@@ -41,5 +41,5 @@ interface ProductDao {
     fun getProductCategoryList(): LiveData<List<String>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(products: List<Product>)
+    fun insertAll(products: List<Product>)
 }

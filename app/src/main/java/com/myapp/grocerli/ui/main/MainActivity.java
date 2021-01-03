@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mainViewModel.getProductCategoryList().observe(this, productList -> {
+            if (productList == null || productList.isEmpty()) mainViewModel.insertProductList();
             SectionsPagerAdapter sectionsPagerAdapter =
                     new SectionsPagerAdapter(MainActivity.this, getSupportFragmentManager(), productList);
             ViewPager viewPager = binding.viewPager;

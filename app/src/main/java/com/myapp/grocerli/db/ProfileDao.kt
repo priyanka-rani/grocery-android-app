@@ -39,7 +39,7 @@ interface ProfileDao {
     fun getProfile(userId:Int): LiveData<Profile>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(profile: Profile?):Long
+    fun insert(profile: Profile?):Long
 
     @Update
     suspend fun update(profile: Profile?):Int

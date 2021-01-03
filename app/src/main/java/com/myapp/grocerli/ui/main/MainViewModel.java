@@ -28,6 +28,9 @@ public class MainViewModel extends ViewModel {
     public LiveData<List<String>> getProductCategoryList() {
         return productRepository.getProductCategoryList();
     }
+    public void insertProductList(){
+        profileRepository.insertProductList();
+    }
     public void logoutUser(){
         profileRepository.logoutUser();
     }

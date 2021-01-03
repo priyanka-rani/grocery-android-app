@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.myapp.grocerli.Utilities;
+import com.myapp.grocerli.data.Status;
 import com.myapp.grocerli.ui.main.MainActivity;
 import com.myapp.grocerli.R;
 import com.myapp.grocerli.databinding.ActivityLoginBinding;
@@ -29,24 +31,21 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setViewModel(loginViewModel);
         binding.setLifecycleOwner(this);
-        loginViewModel.profileLiveData.observe(this, profile -> {
-            if (profile == null) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }finally {
-                    synchronized (LoginActivity.this){
-                        if(profile == null)
-                        Snackbar.make(binding.getRoot(),R.string.invalid_email_pass, Snackbar.LENGTH_LONG).show();
+        loginViewModel.profileLiveData.observe(this, resource -> {
+            if (resource != null)
+                if (resource.getStatus() == Status.SUCCESS) {
+                    if (resource.getData()!= null &&
+                            Utilities.INSTANCE.decodeBase64(resource.getData().password).equals(loginViewModel.pass.getValue())) {
+                        loginViewModel.saveLogin(resource.getData().id);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        LoginActivity.this.finish();
                     }
-                }
 
-            }else {
-                loginViewModel.saveLogin(profile.id);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                LoginActivity.this.finish();
-            }
+
+                } else if (resource.getStatus() == Status.ERROR) {
+                    Snackbar.make(binding.getRoot(), R.string.invalid_email_pass, Snackbar.LENGTH_LONG).show();
+
+                }
         });
         binding.btSignUp.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 

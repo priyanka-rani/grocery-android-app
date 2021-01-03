@@ -1,10 +1,17 @@
 package com.myapp.grocerli.repository
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.myapp.grocerli.Utilities
+import com.myapp.grocerli.api.ApiService
 import com.myapp.grocerli.data.Profile
+import com.myapp.grocerli.data.Resource
 import com.myapp.grocerli.db.ProfileDao
 import com.myapp.grocerli.pref.PreferenceHelper
+import com.myapp.grocerli.utils.AppExecutors
+import com.myapp.grocerli.workers.CartDatabaseWorker
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,12 +35,33 @@ import javax.inject.Singleton
  */
 @Singleton
 class ProfileRepository @Inject constructor(
+        @ApplicationContext private val context: Context,
+        val appExecutors: AppExecutors,
         private val profileDao: ProfileDao,
+        private val apiService: ApiService,
         private val preferenceHelper: PreferenceHelper) {
-    fun checkLogin(email: String, password: String) = profileDao.getProfile(email).map { profile ->
-        if (profile?.password?.let { Utilities.decodeBase64(it) } == password) profile
-        else null
+    fun loadUser(email: String): LiveData<Resource<Profile>> {
+        return object : NetworkBoundResource<Profile, Profile>(appExecutors) {
+            override fun saveCallResult(item: Profile) {
+                profileDao.getProfile(email = email)
+            }
+
+            override fun shouldFetch(data: Profile?): Boolean {
+                if(data == null&& email=="test@gmail.com"){
+                    appExecutors.diskIO().execute {
+                        CartDatabaseWorker.insertProfile(context = context)
+                    }
+                }
+                return false
+            }
+
+            override fun loadFromDb() =
+                    profileDao.getProfile(email = email)
+
+            override fun createCall() = apiService.getUser(email)
+        }.asLiveData()
     }
+
     fun getUser()= profileDao.getProfile(preferenceHelper.loggedInId)
 
     fun loginUser(loggedinId: Int) {
@@ -48,6 +76,11 @@ class ProfileRepository @Inject constructor(
     fun logoutUser() {
         preferenceHelper.logoutUser()
 
+    }
+    fun insertProductList(){
+        appExecutors.diskIO().execute {
+            CartDatabaseWorker.insertProducts(context = context)
+        }
     }
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.

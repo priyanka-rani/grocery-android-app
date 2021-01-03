@@ -44,12 +44,12 @@ class CartDatabaseWorker(
     }
 
     companion object {
-        suspend fun insertProfile(context: Context) {
+        fun insertProfile(context: Context) {
             val database = AppDatabase.getInstance(context)
             val profileDao = database.profileDao()
             profileDao.insert(Profile("Test User", "test@gmail.com", Utilities.encodeToBase64("test123")))
         }
-        suspend fun insertProducts(context: Context) =
+        fun insertProducts(context: Context) =
                 context.assets.open(GROCERY_DATA_FILENAME).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
                         val type = object : TypeToken<List<Product>>() {}.type

@@ -17,18 +17,34 @@
 package com.myapp.grocerli.di
 
 import android.content.Context
+import com.myapp.grocerli.api.ApiService
 import com.myapp.grocerli.db.*
 import com.myapp.grocerli.pref.PreferenceHelper
+import com.myapp.grocerli.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 class AppModule {
+
+
+    @Singleton
+    @Provides
+    fun provideApiService(): ApiService {
+        return Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
+                .build()
+                .create(ApiService::class.java)
+    }
 
     @Singleton
     @Provides
