@@ -10,10 +10,8 @@ An Android Application for Demo Grocery Shopping using Android Architecture Comp
 5. New User Signup
 6. Login.
 
-------------
-
-
-**Foundation -** Components for core system capabilities, Kotlin extensions.
+## Foundation
+Components for core system capabilities, Kotlin extensions.
 AppCompat - Degrade gracefully on older versions of Android.
 Android KTX - Write more concise, idiomatic Kotlin code.
 **Architecture -** A collection of libraries that help you design robust, testable, and maintainable apps. Start with classes for managing your UI component lifecycle and handling data persistence.
