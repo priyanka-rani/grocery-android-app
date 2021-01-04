@@ -21,7 +21,7 @@ import com.myapp.grocerli.workers.CartDatabaseWorker
             CartItem::class,
             OrderItem::class
         ],
-        version = 10,
+        version = 11,
         exportSchema = false
 )
 @TypeConverters(Converters::class)
