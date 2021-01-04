@@ -44,11 +44,13 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         binding.rvItems.setAdapter(adapter);
+        /*populate the cart product item list*/
         cartViewModel.getCartItemListLiveData().observe(this, adapter::submitList);
-
+/*place order button */
         binding.btPlaceOrder.setOnClickListener(v -> {
             cartViewModel.insertOrderItem();
             if (cartViewModel.getCartItemListLiveData().getValue().size() > 0) {
+                /*success message*/
                 new AlertDialog.Builder(v.getContext()).setTitle(R.string.place_order)
                         .setMessage("Order Placed Successfully!!")
                         .setPositiveButton("OK", (dialog, which) ->{

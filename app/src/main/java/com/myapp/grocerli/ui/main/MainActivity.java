@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setViewModel(mainViewModel);
         binding.setLifecycleOwner(this);
         FloatingActionButton fab = binding.fab;
-
+/*banner slider*/
         ArrayList<Integer> listImage = new ArrayList<>();
         listImage.add(R.drawable.banner1);
         listImage.add(R.drawable.banner2);
@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
             sliderView.bundle(new Bundle());
             binding.slider.addSlider(sliderView);
         }
-
+/*cart icon click*/
         fab.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, CartActivity.class));
         });
-
+/*populate category tab*/
         mainViewModel.getProductCategoryList().observe(this, productList -> {
             if (productList == null || productList.isEmpty()) mainViewModel.insertProductList();
             SectionsPagerAdapter sectionsPagerAdapter =
@@ -72,19 +72,23 @@ public class MainActivity extends AppCompatActivity {
             viewPager.setAdapter(sectionsPagerAdapter);
             binding.tabs.setupWithViewPager(viewPager);
         });
+        /*menu screen*/
         binding.toolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menuLogout:
+                        /*logout*/
                         mainViewModel.logoutUser();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         MainActivity.this.finish();
                         break;
                     case R.id.menuProfile:
+                        /*profile*/
                         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                         break;
                     case R.id.menuOrder:
+                        /*your order*/
                         startActivity(new Intent(MainActivity.this, OrderActivity.class));
                 }
                 return true;

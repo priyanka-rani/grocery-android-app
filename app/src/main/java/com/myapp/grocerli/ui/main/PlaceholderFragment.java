@@ -53,10 +53,12 @@ public class PlaceholderFragment extends Fragment {
             Bundle savedInstanceState) {
         FragmentMainBinding binding = FragmentMainBinding.inflate(inflater, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+        /*populating the products*/
         pageViewModel.getProductList().observe(getViewLifecycleOwner(), products -> {
             ProductListAdapter adapter = new ProductListAdapter(products, new ProductListAdapter.ItemClickListener() {
                 @Override
                 public void onItemClick(Product product) {
+                    /*product add to cart icon click*/
                     Snackbar.make(binding.getRoot(), "Product Successfully added to Cart", Snackbar.LENGTH_LONG).show();
                     pageViewModel.addProduct(product);
                 }

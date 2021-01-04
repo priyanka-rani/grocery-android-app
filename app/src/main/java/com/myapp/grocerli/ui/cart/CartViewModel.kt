@@ -16,6 +16,7 @@ class CartViewModel @ViewModelInject internal constructor(private val productRep
 
     @JvmField
     var totalPrice= Transformations.map(cartItemListLiveData!!) { input: List<CartItem?>? ->
+        /*total price*/
         var sum = 0.0
         for (cartItem in input!!) {
             sum += cartItem!!.totalPrice!!

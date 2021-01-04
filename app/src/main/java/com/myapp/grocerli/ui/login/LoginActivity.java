@@ -36,16 +36,20 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setViewModel(loginViewModel);
         binding.setLifecycleOwner(this);
+        /*login is successful*/
         loginViewModel.profileLiveData.observe(this, data -> {
             if (data == null && loginViewModel.email.getValue().equals("test@gmail.com")) {
+                /*pre populate db*/
                 appExecutors.diskIO().execute(() -> CartDatabaseWorker.Companion.insertProfile(LoginActivity.this));
             } else {
+                /*check password from database*/
                 if (data != null &&
                         Utilities.INSTANCE.decodeBase64(data.password).equals(loginViewModel.pass.getValue())) {
                     loginViewModel.saveLogin(data.id);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     LoginActivity.this.finish();
                 } else {
+                    /*show invalid email/pass message*/
                     new Handler().postDelayed(() -> {
                         if (data == null)
                             Snackbar.make(binding.getRoot(), R.string.invalid_email_pass, Snackbar.LENGTH_LONG).show();
@@ -53,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        /*signup click*/
         binding.btSignUp.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 
     }

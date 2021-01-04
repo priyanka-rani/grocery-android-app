@@ -22,6 +22,7 @@ class OrderActivity : AppCompatActivity() {
         orderViewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
         binding.viewModel = orderViewModel
         binding.lifecycleOwner = this
+        /*populate order list*/
         orderViewModel.orderList.observe(this, Observer {
             it?.let { data ->
                 val list = data.mapNotNull {

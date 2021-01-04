@@ -24,12 +24,12 @@ public class LoginViewModel extends ViewModel {
     LoginViewModel(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
-
+    /*login click*/
     LiveData<Profile> profileLiveData =
             Transformations.switchMap(_login, input ->
                     profileRepository.loadUser(input)
             );
-
+/*login click*/
     public void loginUser() {
         _login.postValue(email.getValue());
     }

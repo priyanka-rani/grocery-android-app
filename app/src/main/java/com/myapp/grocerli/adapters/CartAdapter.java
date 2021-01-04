@@ -53,15 +53,19 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.ViewHolder> {
         public ViewHolder(ItemCartBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            /* delete icon*/
             binding.btDelete.setOnClickListener(v -> itemClickListener.onItemDelete(getItem(getAdapterPosition())));
+            /*+ icon*/
             binding.tilCount.setEndIconOnClickListener(v -> {
                 CartItem item = getItem(getAdapterPosition());
+                /*max 10 items*/
                 if (item.getCount() < 10) {
                     item.setCount(item.getCount() + 1);
                     itemClickListener.onItemUpdate(item);
                 }
 
             });
+            /*- icon*/
             binding.tilCount.setStartIconOnClickListener(v -> {
                 CartItem item = getItem(getAdapterPosition());
                 if (item.getCount() > 1) {

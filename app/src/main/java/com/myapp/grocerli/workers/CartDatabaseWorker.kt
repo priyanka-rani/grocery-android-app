@@ -45,10 +45,11 @@ class CartDatabaseWorker(
     }
 
     companion object {
+        /*pre populate the table*/
         fun insertProfile(context: Context) {
             val database = AppDatabase.getInstance(context)
             val profileDao = database.profileDao()
-            profileDao.insert(Profile("Test User", "test@gmail.com", Utilities.encodeToBase64("test123")))
+            profileDao.insertAsync(Profile("Test User", "test@gmail.com", Utilities.encodeToBase64("test123")))
         }
         fun insertProducts(context: Context) =
                 context.assets.open(GROCERY_DATA_FILENAME).use { inputStream ->

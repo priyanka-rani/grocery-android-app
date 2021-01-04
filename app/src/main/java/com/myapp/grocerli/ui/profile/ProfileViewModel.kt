@@ -23,13 +23,13 @@ class ProfileViewModel @ViewModelInject constructor(private val profileRepositor
             emit(result>0)
         }
     }
-
+/*update click*/
     fun updateUser() {
         val profile = Profile(name.value, email.value, pass.value?.let { Utilities.encodeToBase64(it) })
         profile.id = profileLiveData.value?.id?:-1
         profile.contact = contact.value
         profile.address = address.value
-        profile.category = category.value
+        profile.category = "9"
 
         _updateProfile.value = profile
     }

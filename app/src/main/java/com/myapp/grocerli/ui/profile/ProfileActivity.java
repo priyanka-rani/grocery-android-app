@@ -27,16 +27,20 @@ public class ProfileActivity extends AppCompatActivity {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         binding.setViewModel(profileViewModel);
         binding.setLifecycleOwner(this);
+        /*after update done*/
         profileViewModel.getUpdateResponse().observe(this, success -> {
             Utilities.INSTANCE.hideKeyboard(ProfileActivity.this);
+            /*display success or failed*/
             new AlertDialog.Builder(this)
                     .setTitle(R.string.profile_update)
                     .setMessage(success?R.string.profile_update_message:R.string.profile_update_failed)
                     .setPositiveButton(android.R.string.ok,(dialog, which) -> {
+                        /*go back to home*/
                         if(success) onBackPressed();
                     }).show();
         });
         binding.toolBar.setNavigationOnClickListener(v -> onBackPressed());
+        /*pre populate the user profile data */
         profileViewModel.getProfileLiveData().observe(this, profile -> {
             profileViewModel.getName().postValue(profile.name);
             profileViewModel.getEmail().postValue(profile.email);
