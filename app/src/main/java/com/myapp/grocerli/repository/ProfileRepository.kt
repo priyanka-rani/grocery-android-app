@@ -1,12 +1,7 @@
 package com.myapp.grocerli.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
-import com.myapp.grocerli.Utilities
-import com.myapp.grocerli.api.ApiService
 import com.myapp.grocerli.data.Profile
-import com.myapp.grocerli.data.Resource
 import com.myapp.grocerli.db.ProfileDao
 import com.myapp.grocerli.pref.PreferenceHelper
 import com.myapp.grocerli.utils.AppExecutors
@@ -35,32 +30,11 @@ import javax.inject.Singleton
  */
 @Singleton
 class ProfileRepository @Inject constructor(
+        private val profileDao: ProfileDao,
         @ApplicationContext private val context: Context,
         val appExecutors: AppExecutors,
-        private val profileDao: ProfileDao,
-        private val apiService: ApiService,
         private val preferenceHelper: PreferenceHelper) {
-    fun loadUser(email: String): LiveData<Resource<Profile>> {
-        return object : NetworkBoundResource<Profile, Profile>(appExecutors) {
-            override fun saveCallResult(item: Profile) {
-                profileDao.getProfile(email = email)
-            }
-
-            override fun shouldFetch(data: Profile?): Boolean {
-                if(data == null&& email=="test@gmail.com"){
-                    appExecutors.diskIO().execute {
-                        CartDatabaseWorker.insertProfile(context = context)
-                    }
-                }
-                return false
-            }
-
-            override fun loadFromDb() =
-                    profileDao.getProfile(email = email)
-
-            override fun createCall() = apiService.getUser(email)
-        }.asLiveData()
-    }
+    fun loadUser(email: String)= profileDao.getProfile(email = email)
 
     fun getUser()= profileDao.getProfile(preferenceHelper.loggedInId)
 
@@ -68,7 +42,7 @@ class ProfileRepository @Inject constructor(
         preferenceHelper.loginUser(loggedinId)
     }
 
-    suspend fun insertUser(profile: Profile) = profileDao.insert(profile)
+    fun insertUser(profile: Profile) = profileDao.insert(profile)
 
     suspend fun updateUser(profile: Profile)=
         profileDao.update(profile)
@@ -80,6 +54,11 @@ class ProfileRepository @Inject constructor(
     fun insertProductList(){
         appExecutors.diskIO().execute {
             CartDatabaseWorker.insertProducts(context = context)
+        }
+    }
+    fun insertUser(){
+        appExecutors.diskIO().execute {
+            CartDatabaseWorker.insertProfile(context = context)
         }
     }
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures

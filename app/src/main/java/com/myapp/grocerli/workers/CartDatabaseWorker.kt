@@ -28,6 +28,7 @@ import com.myapp.grocerli.data.Product
 import com.myapp.grocerli.data.Profile
 import com.myapp.grocerli.db.AppDatabase
 import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
 
 class CartDatabaseWorker(
         context: Context,
@@ -38,7 +39,7 @@ class CartDatabaseWorker(
             insertProfile(context = applicationContext)
             insertProducts(context = applicationContext)
         } catch (ex: Exception) {
-            Log.e(TAG, "Error seeding database", ex)
+            Timber.e(ex, "Error seeding database")
             Result.failure()
         }
     }
@@ -61,6 +62,5 @@ class CartDatabaseWorker(
                 }
 
         private const val GROCERY_DATA_FILENAME = "grocery.json"
-        private const val TAG = "CartDatabaseWorker"
     }
 }

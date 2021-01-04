@@ -1,7 +1,6 @@
 package com.myapp.grocerli.ui.login;
 
 import android.text.TextUtils;
-import android.util.Pair;
 import android.util.Patterns;
 
 import androidx.hilt.lifecycle.ViewModelInject;
@@ -11,7 +10,6 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.myapp.grocerli.data.Profile;
-import com.myapp.grocerli.data.Resource;
 import com.myapp.grocerli.repository.ProfileRepository;
 
 
@@ -27,7 +25,7 @@ public class LoginViewModel extends ViewModel {
         this.profileRepository = profileRepository;
     }
 
-    LiveData<Resource<Profile>> profileLiveData =
+    LiveData<Profile> profileLiveData =
             Transformations.switchMap(_login, input ->
                     profileRepository.loadUser(input)
             );
